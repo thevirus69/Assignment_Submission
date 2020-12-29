@@ -1,0 +1,17 @@
+Why is mid = beg + (end-beg) / 2 instead of: mid = (beg + end) / 2? ?
+
+In more extreme cases, if beg + end is greater than the maximum value of the int type: 2^32-1, then the sum will overflow.
+
+example:
+
+Assuming that you are searching for an array of 4000000000 elements that uses a 32-bit unsigned integer as the index, 
+the value of beg is 2000000000 and the value of end is 4000000000, then if you use (beg + end) / 2, then:
+2000000000+4000000000 = 6000000000> 2^32 = 4294967296 //Overflow occurs,
+
+(beg + end) / 2 The calculated result is actually:
+(6000000000-2^32) / 2 = 1705032704/2 <2000000000
+Not in the range between beg and end. In Java, ArrayIndexOutOfBoundsException will be thrown.
+
+And use lo + (hi-lo) / 2 to calculate:
+(4000000000-2000000000) / 2 + 2000000000 = 3000000000
+The extreme example is invalid, beg + (end-beg) / 2 can always calculate the number between beg and end.
