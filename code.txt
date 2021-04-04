@@ -65,3 +65,62 @@ def main():
 if __name__ == '__main__':
     motor= Motor(2,3,4,17,22,27)
     main()
+
+
+
+
+ sudo apt-get update &amp;&amp; sudo apt-get upgrade &amp;&amp; sudo rpi-update
+2. sudo nano /etc/dphys-swapfile
+    CONF_SWAPSIZE=2048
+3. sudo apt-get install build-essential cmake pkg-config
+4. sudo apt-get install libjpeg-dev libtiff5-dev libjasper-dev libpng12-dev
+5. sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
+6. sudo apt-get install libxvidcore-dev libx264-dev
+7. sudo apt-get install libgtk2.0-dev libgtk-3-dev
+8. sudo apt-get install libatlas-base-dev gfortran
+9. wget -O opencv.zip https://github.com/opencv/opencv/archive/4.1.0.zip
+10. wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/4.1.0.zip
+11. unzip opencv.zip
+12. unzip opencv_contrib.zip
+13. sudo pip3 install numpy
+14. cd ~/opencv-4.1.0/
+15. mkdir build
+16. cd build
+17. cmake -D CMAKE_BUILD_TYPE=RELEASE \
+  -D CMAKE_INSTALL_PREFIX=/usr/local \
+  -D INSTALL_PYTHON_EXAMPLES=ON \
+  -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-4.1.0/modules \
+  -D BUILD_EXAMPLES=ON ..
+18. make -j4
+19. sudo make install &amp;&amp; sudo ldconfig
+20. sudo reboot
+Test Code
+1
+2
+3
+python3
+import cv2
+cv2.__version__
+Webcam Code
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+import cv2
+frameWidth = 640
+frameHeight = 480
+cap = cv2.VideoCapture(0)
+cap.set(3, frameWidth)
+cap.set(4, frameHeight)
+while True:
+    success, img = cap.read()
+    cv2.imshow("Result", img)
+    if cv2.waitKey(1) and 0xFF == ord('q'):
+        break
